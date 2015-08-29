@@ -1,0 +1,15 @@
+<launch>
+
+	<arg name="rviz_args" value="-d $(find ar_localization)/rviz/camera_ar_localization.rviz" /> 
+
+	<include file="$(find ar_localization)/launch/kinect.launch"/>  
+	<include file="$(find ar_localization)/launch/webcam_ar_track.launch"/>
+
+	<node name="image_copier" pkg="ar_localization" type="image_copier.py" respawn="false" output="screen" />
+	<node name="tf_marker_renamer" pkg="ar_localization" type="tf_marker_renamer.py" respawn="false" output="screen" />
+
+	<node name="$(anon rviz)" pkg="rviz" type="rviz" required="true" 
+        respawn="false" output="screen" args="$(arg rviz_args)">
+  </node>
+
+</launch>
